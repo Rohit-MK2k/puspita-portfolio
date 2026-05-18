@@ -25,7 +25,7 @@
             <i class="fi fi-rr-bars-staggered"></i>
           </button>
           <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarSupportedContent">
-            <button class="btn-close btn-close-white d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="#navbarSupportedContent" aria-expanded="false" aria-label="Close navigation"></button>
+            <button class="btn-close btn-close-white d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Close navigation"></button>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
                 <a class="nav-link" href="../home.html">HOME</a>
@@ -58,7 +58,7 @@
                 <div class="col-12 col-md-6" data-aos="fade-up" data-aos-duration="2000">
                     <div class="about-txt">
                         <p>My work spans across UI design, where I develop intuitive interfaces and custom icons that enhance user experience, to front-end development with HTML that brings designs into functional reality.
- <br>                     From designing eye-catching educational reel thumbnails and social media posts to crafting comprehensive brand identities through logos, certificates, and corporate materials, I bring ideas to life with purpose and polish.  </p>
+                        <br>From designing eye-catching educational reel thumbnails and social media posts to crafting comprehensive brand identities through logos, certificates, and corporate materials, I bring ideas to life with purpose and polish.  </p>
 
                         <a class="btn01" href="https://drive.google.com/file/d/1CT3Owhg3kUezYxqmbWzbRIC6mVk4_I-d/view?usp=sharing"><span>DOWNLOAD MY RESUME</span></a>
 
@@ -164,15 +164,15 @@
                         <div class="timeline-title">Tutopia: Assistant Web Designer</div>
                         <div class="timeline-desc">
                             • Built high-fidelity UI screens in Figma for an educational app, organizing reusable components into a design system that kept
-visual consistency across product screens. <br>
-• Applied visual hierarchy, typography, and color theory to produce structured layouts using grid and spacing systems; followed
-mobile-first, responsive design patterns throughout. <br>
-• Produced low-to-mid fidelity wireframes for new feature proposals, iterating on feedback before finalizing high-fidelity
-designs. <br>
-• Mapped user journeys for core student-facing flows and structured information architecture to support intuitive platform
-navigation. <br>
-• Created custom icons, app tutorial visuals, and branded materials (logos, certificates, ID cards), maintaining consistent visual
-identity across digital touchpoints.
+                            visual consistency across product screens. <br>
+                            • Applied visual hierarchy, typography, and color theory to produce structured layouts using grid and spacing systems; followed
+                            mobile-first, responsive design patterns throughout. <br>
+                            • Produced low-to-mid fidelity wireframes for new feature proposals, iterating on feedback before finalizing high-fidelity
+                            designs. <br>
+                            • Mapped user journeys for core student-facing flows and structured information architecture to support intuitive platform
+                            navigation. <br>
+                            • Created custom icons, app tutorial visuals, and branded materials (logos, certificates, ID cards), maintaining consistent visual
+                            identity across digital touchpoints.        
                         </div>
                     </div>
                     <!-- <div class="timeline-item">
@@ -604,6 +604,15 @@ $('button.back-to-top').click(function() {
     </script>
 
     <script>
+        // Auto-close navbar when clicking nav-links on mobile
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                const navbarCollapse = document.getElementById('navbarSupportedContent');
+                const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
+                bsCollapse.hide();
+            });
+        });
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {

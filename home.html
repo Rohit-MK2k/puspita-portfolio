@@ -27,7 +27,7 @@
             <button class="btn-close btn-close-white d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Close navigation"></button>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="home.html">HOME</a>
+                <a class="nav-link  active" href="home.html">HOME</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="about_me/index.html">ABOUT ME</a>
@@ -132,15 +132,15 @@
                         <div class="timeline-title">Assistant Web Designer- Tutopia Pvt. Ltd.</div>
                         <div class="timeline-desc">
                             • Built high-fidelity UI screens in Figma for an educational app, organizing reusable components into a design system that kept
-visual consistency across product screens. <br>
-• Applied visual hierarchy, typography, and color theory to produce structured layouts using grid and spacing systems; followed
-mobile-first, responsive design patterns throughout. <br>
-• Produced low-to-mid fidelity wireframes for new feature proposals, iterating on feedback before finalizing high-fidelity
-designs. <br>
-• Mapped user journeys for core student-facing flows and structured information architecture to support intuitive platform
-navigation. <br>
-• Created custom icons, app tutorial visuals, and branded materials (logos, certificates, ID cards), maintaining consistent visual
-identity across digital touchpoints.
+                            visual consistency across product screens. <br>
+                            • Applied visual hierarchy, typography, and color theory to produce structured layouts using grid and spacing systems; followed
+                            mobile-first, responsive design patterns throughout. <br>
+                            • Produced low-to-mid fidelity wireframes for new feature proposals, iterating on feedback before finalizing high-fidelity
+                            designs. <br>
+                            • Mapped user journeys for core student-facing flows and structured information architecture to support intuitive platform
+                            navigation. <br>
+                            • Created custom icons, app tutorial visuals, and branded materials (logos, certificates, ID cards), maintaining consistent visual
+                            identity across digital touchpoints.
                         </div>
                     </div>
                     <!-- <div class="timeline-item">
@@ -285,7 +285,7 @@ identity across digital touchpoints.
             <!-- Portfolio Grid -->
             <div class="portfolio-grid" id="portfolioGrid" data-aos="fade-up" data-aos-duration="2000">
                 <!-- Web Design Projects -->
-                <div class="portfolio-item" data-category="web-design" data-project="project1">
+                <div class="portfolio-item" data-category="web-design" data-project="project1" data-year="2024">
                     <div class="portfolio-panel">
                         <img src="assets/img/web01/Presentation02.jpg" alt="Bike Shop Website" class="portfolio-image">
                     </div>
@@ -295,7 +295,7 @@ identity across digital touchpoints.
                     </div>
                 </div>
 
-                <div class="portfolio-item" data-category="web-design" data-project="project2">
+                <div class="portfolio-item" data-category="web-design" data-project="project2" data-year="2024">
                     <div class="portfolio-panel">
                         <img src="assets/img/web02/web02-2.jpg" alt="Scuba Diving Website" class="portfolio-image">
                     </div>
@@ -305,7 +305,7 @@ identity across digital touchpoints.
                     </div>
                 </div>
 
-                <div class="portfolio-item" data-category="web-design" data-project="project3">
+                <div class="portfolio-item" data-category="web-design" data-project="project3" data-year="2025">
                     <div class="portfolio-panel">
                         <img src="assets/img/web03/restaurent03.jpg" alt="Restaurent Website" class="portfolio-image">
                     </div>
@@ -316,7 +316,7 @@ identity across digital touchpoints.
                 </div>
 
                 <!-- UI Design Projects -->
-                <div class="portfolio-item" data-category="ui-design" data-project="project4">
+                <div class="portfolio-item" data-category="ui-design" data-project="project4" data-year="2024">
                     <div class="portfolio-panel">
                         <img src="assets/img/ui01/mob01.jpg" alt="Ai Image Generator App" class="portfolio-image">
                     </div>
@@ -326,7 +326,7 @@ identity across digital touchpoints.
                     </div>
                 </div>
 
-                <div class="portfolio-item" data-category="ui-design" data-project="project5">
+                <div class="portfolio-item" data-category="ui-design" data-project="project5" data-year="2025">
                     <div class="portfolio-panel">
                         <img src="assets/img/ui02/mob02.jpg" alt="E-commerce App" class="portfolio-image">
                     </div>
@@ -336,7 +336,7 @@ identity across digital touchpoints.
                     </div>
                 </div>
 
-                <div class="portfolio-item" data-category="ui-design" data-project="project6">
+                <div class="portfolio-item" data-category="ui-design" data-project="project6" data-year="2025">
                     <div class="portfolio-panel">
                         <img src="assets/img/ui03/mob03.jpg" alt="E-commerce UI" class="portfolio-image">
                     </div>
@@ -347,7 +347,7 @@ identity across digital touchpoints.
                 </div>
 
                 <!-- Graphics Design Projects -->
-                <div class="portfolio-item" data-category="graphics-design" data-project="project7">
+                <div class="portfolio-item" data-category="graphics-design" data-project="project7" data-year="2024">
                     <div class="portfolio-panel">
                         <img src="assets/img/gx01.jpg" alt="Brand Identity" class="portfolio-image">
                     </div>
@@ -357,7 +357,7 @@ identity across digital touchpoints.
                     </div>
                 </div>
 
-                <div class="portfolio-item" data-category="graphics-design" data-project="project8">
+                <div class="portfolio-item" data-category="graphics-design" data-project="project8" data-year="2024">
                     <div class="portfolio-panel">
                         <img src="assets/img/gx02.jpg" alt="Menu Design" class="portfolio-image">
                     </div>
@@ -604,6 +604,24 @@ identity across digital touchpoints.
         document.addEventListener('DOMContentLoaded', function() {
             const filterBtns = document.querySelectorAll('.filter-btn');
             const portfolioItems = document.querySelectorAll('.portfolio-item');
+            const portfolioGrid = document.getElementById('portfolioGrid');
+
+            // Sort projects by year descending; within same year, higher project number first
+            function sortPortfolioByYearDesc() {
+                const viewAll = portfolioGrid.querySelector('[data-project="viewAll"]');
+                const items = Array.from(portfolioGrid.querySelectorAll('.portfolio-item:not([data-project="viewAll"])'));
+                items.sort((a, b) => {
+                    const yearA = parseInt(a.dataset.year) || 0;
+                    const yearB = parseInt(b.dataset.year) || 0;
+                    if (yearA !== yearB) return yearB - yearA;
+                    const numA = parseInt((a.dataset.project || '').replace(/\D/g, '')) || 0;
+                    const numB = parseInt((b.dataset.project || '').replace(/\D/g, '')) || 0;
+                    return numB - numA;
+                });
+                items.forEach(item => portfolioGrid.insertBefore(item, viewAll));
+            }
+
+            sortPortfolioByYearDesc();
 
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -653,6 +671,15 @@ identity across digital touchpoints.
     </script>
 
     <script>
+        // Auto-close navbar when clicking nav-links on mobile
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                const navbarCollapse = document.getElementById('navbarSupportedContent');
+                const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
+                bsCollapse.hide();
+            });
+        });
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {

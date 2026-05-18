@@ -1780,7 +1780,7 @@ ul{
 }
 
 /* --- Navbar mobile full-screen overlay --- */
-@media (max-width: 991.98px) {
+@media (max-width: 767.98px) {
     .navbar-collapse {
         position: fixed;
         top: 0;
@@ -1796,9 +1796,7 @@ ul{
         z-index: 9999;
         padding-top: 0;
     }
-    .navbar-collapse:not(.show) {
-        display: none !important;
-    }
+
     .navbar-nav {
         width: 100%;
         text-align: center;

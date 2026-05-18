@@ -197,6 +197,43 @@
             transition: width 0.08s linear;
         }
 
+        /* ── Scroll down indicator ── */
+        .scroll-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            margin: 0 auto 60px;
+            width: fit-content;
+            color: rgba(255,255,255,0.35);
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: color 0.25s;
+            user-select: none;
+        }
+        .scroll-indicator:hover { color: #03CAD6; }
+        .scroll-arrow-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .scroll-arrow {
+            width: 10px;
+            height: 10px;
+            border-right: 2px solid currentColor;
+            border-bottom: 2px solid currentColor;
+            transform: rotate(45deg);
+            animation: scrollBounce 1.5s ease-in-out infinite;
+        }
+        .scroll-arrow:nth-child(2) { animation-delay: 0.2s; opacity: 0.6; }
+        .scroll-arrow:nth-child(3) { animation-delay: 0.4s; opacity: 0.3; }
+        @keyframes scrollBounce {
+            0%, 100% { transform: rotate(45deg) translate(0, 0); opacity: 1; }
+            50%       { transform: rotate(45deg) translate(3px, 3px); }
+        }
+
         /* ── 404 state ── */
         .not-found {
             text-align: center;
@@ -205,9 +242,112 @@
         }
         .not-found h2 { font-size: 2rem; margin-bottom: 16px; color: #fff; }
 
+        /* ── Close button ── */
+        .close-btn {
+            position: fixed;
+            top: 20px;
+            right: 24px;
+            z-index: 2000;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(33, 37, 41, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #fff;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s, transform 0.2s;
+            text-decoration: none;
+        }
+        .close-btn:hover {
+            background: rgba(3, 202, 214, 0.2);
+            border-color: #03CAD6;
+            color: #03CAD6;
+            transform: scale(1.08);
+        }
+
+        /* ── Tablet ── */
+        @media (max-width: 768px) {
+            .detail-text {
+                padding: 40px 20px 40px;
+            }
+            .detail-row {
+                gap: 28px;
+            }
+            .close-btn {
+                top: 14px;
+                right: 16px;
+                width: 38px;
+                height: 38px;
+                font-size: 1rem;
+            }
+            .next-project-heading {
+                letter-spacing: -1px;
+                padding: 0 20px;
+            }
+        }
+
+        /* ── Mobile ── */
         @media (max-width: 576px) {
-            .detail-row { gap: 24px; }
-            .detail-title { font-size: 1.8rem; }
+            .detail-text {
+                padding: 28px 16px 28px;
+            }
+            .detail-meta {
+                font-size: 0.62rem;
+                letter-spacing: 2px;
+            }
+            .detail-title {
+                font-size: 1.5rem;
+                margin-bottom: 16px;
+            }
+            .detail-desc {
+                font-size: 0.88rem;
+                line-height: 1.75;
+                margin-bottom: 28px;
+            }
+            .detail-row {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px 0;
+                margin-bottom: 36px;
+            }
+            .detail-col {
+                width: 100%;
+            }
+            .tech-tag {
+                font-size: 0.72rem;
+                padding: 3px 10px;
+            }
+            .close-btn {
+                top: 10px;
+                right: 12px;
+                width: 32px;
+                height: 32px;
+                font-size: 0.85rem;
+            }
+            .scroll-indicator {
+                margin: 0 auto 36px;
+                font-size: 0.6rem;
+            }
+            .next-project-heading {
+                font-size: clamp(2rem, 12vw, 3.5rem);
+                letter-spacing: 0;
+                padding: 0 16px;
+            }
+            .next-project-line {
+                width: 100px;
+            }
+            .not-found {
+                padding: 80px 20px;
+            }
+            .not-found h2 {
+                font-size: 1.4rem;
+            }
         }
     </style>
 </head>
@@ -242,6 +382,9 @@
   
     </section>
 
+    <!-- Close button -->
+    <a class="close-btn" id="closeBtn" href="all-projects.html" aria-label="Close project">&#x2715;</a>
+
     <!-- Page content -->
     <div class="detail-page" id="detailPage">
         <!-- Populated by JS -->
@@ -251,6 +394,31 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
     <script src="assets/js/project-data.js"></script>
     <script>
+        // Close button: go back if possible, else fall back to all-projects
+        document.getElementById('closeBtn').addEventListener('click', function(e) {
+            if (window.history.length > 1) {
+                e.preventDefault();
+                window.history.back();
+            }
+        });
+
+        // Hide the project close button while the mobile navbar is open so it
+        // doesn't block the Bootstrap ✕ inside the expanded menu
+        const navCollapseEl = document.getElementById('navbarSupportedContent');
+        const closeBtn      = document.getElementById('closeBtn');
+        navCollapseEl.addEventListener('show.bs.collapse',   () => closeBtn.style.display = 'none');
+        navCollapseEl.addEventListener('hidden.bs.collapse', () => closeBtn.style.display = 'flex');
+
+        // Close the mobile navbar when a nav-link is tapped, without
+        // re-initializing Bootstrap's Collapse (which broke link navigation)
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                const navEl = document.getElementById('navbarSupportedContent');
+                const instance = bootstrap.Collapse.getInstance(navEl);
+                if (instance) instance.hide();
+            });
+        });
+
         // Sticky glass navbar
         window.addEventListener('scroll', function () {
             document.querySelector('.header').classList.toggle('scrolled', window.scrollY > 60);
@@ -263,7 +431,7 @@
             return (idx !== -1 && idx < projectOrder.length - 1) ? projectOrder[idx + 1] : null;
         }
 
-        function buildProjectHTML(proj) {
+        function buildProjectHTML(proj, imgId) {
             const techTags = proj.technologies.map(t => `<span class="tech-tag">${t}</span>`).join('');
             const images   = proj.images.map(src => `<img src="${src}" alt="${proj.title}">`).join('');
             return `
@@ -285,8 +453,16 @@
                             <div class="tech-stack">${techTags}</div>
                         </div>
                     </div>
+                    <div class="scroll-indicator" data-target="${imgId}">
+                        <span>Scroll</span>
+                        <div class="scroll-arrow-wrap">
+                            <div class="scroll-arrow"></div>
+                            <div class="scroll-arrow"></div>
+                            <div class="scroll-arrow"></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="detail-images">${images}</div>`;
+                <div class="detail-images" id="${imgId}">${images}</div>`;
         }
 
         function appendNextTeaser(nextId, container) {
@@ -328,9 +504,11 @@
                     window.history.replaceState({}, '', `project-detail.html?id=${nextId}`);
                     document.title = proj.title + ' — Portfolio';
 
+                    const imgId = 'imgs_' + nextId;
                     const section = document.createElement('div');
-                    section.innerHTML = buildProjectHTML(proj);
+                    section.innerHTML = buildProjectHTML(proj, imgId);
                     container.appendChild(section);
+                    bindScrollIndicators(section);
 
                     const furtherNext = getNextId(nextId);
                     if (furtherNext) appendNextTeaser(furtherNext, container);
@@ -338,6 +516,15 @@
             }
 
             window.addEventListener('scroll', onScroll, { passive: true });
+        }
+
+        function bindScrollIndicators(root) {
+            root.querySelectorAll('.scroll-indicator').forEach(el => {
+                el.addEventListener('click', () => {
+                    const target = document.getElementById(el.dataset.target);
+                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
         }
 
         // ── Initial render ──
@@ -354,7 +541,8 @@
                 </div>`;
         } else {
             document.title = project.title + ' — Portfolio';
-            page.innerHTML = buildProjectHTML(project);
+            page.innerHTML = buildProjectHTML(project, 'imgs_initial');
+            bindScrollIndicators(page);
 
             const nextId = getNextId(id);
             if (nextId) appendNextTeaser(nextId, page);

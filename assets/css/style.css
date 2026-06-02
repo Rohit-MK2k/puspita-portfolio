@@ -1796,6 +1796,9 @@ ul{
         z-index: 9999;
         padding-top: 0;
     }
+    .navbar-collapse:not(.show) {
+        display: none !important;
+    }
 
     .navbar-nav {
         width: 100%;
